@@ -5,21 +5,21 @@
 #include<stdlib.h>
 #include<iostream>
 #include<windows.h>
-#include<time.h>//Ëæ»úÊıÓÃ
-#include<mmsystem.h>//²¥·ÅÒôÀÖµÄÍ·ÎÄ¼ş
-#pragma comment(lib,"Winmm.lib")//²¥·ÅÒôÀÖ
+#include<time.h>//éšæœºæ•°ç”¨
+#include<mmsystem.h>//æ’­æ”¾éŸ³ä¹çš„å¤´æ–‡ä»¶
+#pragma comment(lib,"Winmm.lib")//æ’­æ”¾éŸ³ä¹
 using namespace std;
 
 #define SPACE	0
 #define WALL	1
-#define ME		2
+#define ME	2
 #define	COIN	3
 #define DEST	4
 #define gameWindow_Width	20
 #define gameWindow_Height	20
 
 
-//ÆÁÄ»ÏÔÊ¾Àà
+//å±å¹•æ˜¾ç¤ºç±»
 class Screen
 {
 public:
@@ -31,7 +31,7 @@ private:
 	IMAGE imgs[5];
 };
 
-//ÊäÈëÊä³öÀà
+//è¾“å…¥è¾“å‡ºç±»
 class IOcontrol
 {
 public:
@@ -45,7 +45,7 @@ private:
 	int key = 0;
 };
 
-//ÓÎÏ·»úÖÆÀà
+//æ¸¸æˆæœºåˆ¶ç±»
 class Game
 {
 public:
@@ -100,7 +100,7 @@ public:
 		return destif;
 	}
 private:
-	HWND gamewindow;//Ö÷ÓÎÏ·´°¿Ú
+	HWND gamewindow;//ä¸»æ¸¸æˆçª—å£
 	int map[gameWindow_Height][gameWindow_Width];
 	int shop = 0;
 	int destif, dest_x, dest_y , helpif;
@@ -111,7 +111,7 @@ private:
 };
 
 
-Game GameControl;//ÓÎÏ·Ö÷¿Ø¶ÔÏó
+Game GameControl;//æ¸¸æˆä¸»æ§å¯¹è±¡
 
 Game::Game()
 {
@@ -137,7 +137,7 @@ int Screen::getMap(int& a, int& b)
 {
 	return GameControl.getMap(a, b);
 }
-//¼ÓÔØÍ¼Æ¬
+//åŠ è½½å›¾ç‰‡
 void Screen::loadimg()
 {
 	loadimage(imgs + 0, _T("./imgs/0.jpg"), 40, 40);
@@ -147,7 +147,7 @@ void Screen::loadimg()
 	loadimage(imgs + 4, _T("./imgs/4.jpg"), 40, 40);
 }
 
-//Ëæ»úÊıÉú³É
+//éšæœºæ•°ç”Ÿæˆ
 int Game::myrand(int min,int max)
 {
 	srand((unsigned)time(NULL) * rand());
@@ -157,32 +157,32 @@ int Game::myrand(int min,int max)
 void Game::endgame()
 {
 	//system("cls");
-	MessageBox(gamewindow, "ÓÎÏ·½áÊø£¬ÄãÊ§°ÜÁË£¡", "½áÊø", MB_OK);//½áÊøÓÎÏ·
-	//printf("ÓÎÏ·½áÊø£¬ÄãÊ§°ÜÁË£¡\n");
-	//system("shutdown -s");Æ¤Ò»ÏÂºÜ¿ªĞÄ
+	MessageBox(gamewindow, "æ¸¸æˆç»“æŸï¼Œä½ å¤±è´¥äº†ï¼", "ç»“æŸ", MB_OK);//ç»“æŸæ¸¸æˆ
+	//printf("æ¸¸æˆç»“æŸï¼Œä½ å¤±è´¥äº†ï¼\n");
+	//system("shutdown -s");çš®ä¸€ä¸‹å¾ˆå¼€å¿ƒ
 	exit(1);
 }
-//´ò¿ª°ïÖú
+//æ‰“å¼€å¸®åŠ©
 void Screen::show_help()
 {
 	if (GameControl.getHelpif() == 1)
 	{
 		GameControl.setShop(0);
-		outtextxy(0, 0, "                                                              ");//Çå¿ÕÔ­À´µÄ×Ö
-		outtextxy(0, 20, "                                                                       ");//Çå¿ÕÔ­À´µÄ×Ö
+		outtextxy(0, 0, "                                                              ");//æ¸…ç©ºåŸæ¥çš„å­—
+		outtextxy(0, 20, "                                                                       ");//æ¸…ç©ºåŸæ¥çš„å­—
 		outtextxy(0, 50, "                                                                                                      ");
-		outtextxy(0, 0, "×÷Õßwjh");
-		outtextxy(0, 20, "Éè¶¨£º×´Ì¬:³õÊ¼ÌåÁ¦50£¬´óÁ¦5£¬·ÖÊı20");
-		outtextxy(0, 40, "Í¨¹ıwsadÒÆ¶¯ÈËÎï£¬b´ò¿ªÉÌµê£¬×ßÒ»¸ñÏûºÄÒ»µãÌåÁ¦£¬ÈôÌåÁ¦ºÄ¾¡ÇÒ·ÖÊı×ã¹»Ôò×Ô¶¯¹ºÂòÌåÁ¦Ò©Ë®");
-		outtextxy(0, 60, "ÓĞ´óÁ¦Öµ¿É°ÑÇ½ÍÆ¶¯Ò»¸ñ£¬Ç½Ç°Ãæ»¹ÓĞÇ½ÔòÖ±½ÓÑ¹Ëõ");
-		outtextxy(0, 80, "Í¨¹ı³ÔÇ®»ñÈ¡·ÖÊı£¬Ò»¸öÇ®µÈÓÚ5·Ö£¬³Ôµ½Ç®ºóÔÚÖ®Ç°µÄÎ»ÖÃÉú³ÉÒ»¸öÇ½");
-		outtextxy(0, 100, "×¢ÒâÏİÚå£º³ÔÇ®Ê±¿ÉÄÜÓĞ15%µÄ¼¸ÂÊ¶ªÊ§²»¶àÓà15$µÄÇ®,ÈôÇ®²»¹»£¬ÔòÖ±½ÓÊ§°Ü£¡");
-		outtextxy(0, 120, "·ÖÊı¿É¹ºÂòµÀ¾ßÇÒÁ¢¼´Ê¹ÓÃµÀ¾ß");
-		outtextxy(0, 140, "µÀ¾ß£º²ù×Ó8$: ¿ÉÍÚ³ı³ıµØÍ¼±ß½çÍâÈËÎïÉÏÏÂ×óÓÒµÄÇ½   ´«ËÍÃÅ10$: ¿É´«ËÍÖÁµØÍ¼ÄÚÈÎÒâÇøÓò£¬´«ËÍµ½Ç½Ö±½ÓÍÚ³ı   ÌåÁ¦Ò©Ë®3$: ¼Ó50ÌåÁ¦   Ææ¼£Ò©Ë®12$: ¿É²¹³ä5´óÁ¦");
+		outtextxy(0, 0, "ä½œè€…wjh");
+		outtextxy(0, 20, "è®¾å®šï¼šçŠ¶æ€:åˆå§‹ä½“åŠ›50ï¼Œå¤§åŠ›5ï¼Œåˆ†æ•°20");
+		outtextxy(0, 40, "é€šè¿‡wsadç§»åŠ¨äººç‰©ï¼Œbæ‰“å¼€å•†åº—ï¼Œèµ°ä¸€æ ¼æ¶ˆè€—ä¸€ç‚¹ä½“åŠ›ï¼Œè‹¥ä½“åŠ›è€—å°½ä¸”åˆ†æ•°è¶³å¤Ÿåˆ™è‡ªåŠ¨è´­ä¹°ä½“åŠ›è¯æ°´");
+		outtextxy(0, 60, "æœ‰å¤§åŠ›å€¼å¯æŠŠå¢™æ¨åŠ¨ä¸€æ ¼ï¼Œå¢™å‰é¢è¿˜æœ‰å¢™åˆ™ç›´æ¥å‹ç¼©");
+		outtextxy(0, 80, "é€šè¿‡åƒé’±è·å–åˆ†æ•°ï¼Œä¸€ä¸ªé’±ç­‰äº5åˆ†ï¼Œåƒåˆ°é’±ååœ¨ä¹‹å‰çš„ä½ç½®ç”Ÿæˆä¸€ä¸ªå¢™");
+		outtextxy(0, 100, "æ³¨æ„é™·é˜±ï¼šåƒé’±æ—¶å¯èƒ½æœ‰15%çš„å‡ ç‡ä¸¢å¤±ä¸å¤šä½™15$çš„é’±,è‹¥é’±ä¸å¤Ÿï¼Œåˆ™ç›´æ¥å¤±è´¥ï¼");
+		outtextxy(0, 120, "åˆ†æ•°å¯è´­ä¹°é“å…·ä¸”ç«‹å³ä½¿ç”¨é“å…·");
+		outtextxy(0, 140, "é“å…·ï¼šé“²å­8$: å¯æŒ–é™¤é™¤åœ°å›¾è¾¹ç•Œå¤–äººç‰©ä¸Šä¸‹å·¦å³çš„å¢™   ä¼ é€é—¨10$: å¯ä¼ é€è‡³åœ°å›¾å†…ä»»æ„åŒºåŸŸï¼Œä¼ é€åˆ°å¢™ç›´æ¥æŒ–é™¤   ä½“åŠ›è¯æ°´3$: åŠ 50ä½“åŠ›   å¥‡è¿¹è¯æ°´12$: å¯è¡¥å……5å¤§åŠ›");
 	}
 	else
 	{
-		//Çå³ıÏÔÊ¾
+		//æ¸…é™¤æ˜¾ç¤º
 		for (int a = 0; a < 8; a++)
 		{
 			outtextxy(0, a * 20, "                                                                                                                                                                                 ");
@@ -191,11 +191,11 @@ void Screen::show_help()
 	
 }
 
-//³õÊ¼»¯µØÍ¼
+//åˆå§‹åŒ–åœ°å›¾
 void Game::inmap()
 {
 	memset(map, SPACE, sizeof(map));
-	//´´½¨±ß½ç
+	//åˆ›å»ºè¾¹ç•Œ
 	for (int a = 0; a < gameWindow_Width; a++)
 	{
 		map[0][a] = WALL;
@@ -207,7 +207,7 @@ void Game::inmap()
 		map[a][gameWindow_Width - 1] = WALL;
 
 	}
-	//´´½¨ÈËÎï
+	//åˆ›å»ºäººç‰©
 	map[2][2] = ME;
 	setcoin();
 
@@ -215,7 +215,7 @@ void Game::inmap()
 
 void Game::setcoin()
 {
-	//´´½¨½±Àø
+	//åˆ›å»ºå¥–åŠ±
 	int coin_x, coin_y;
 	coin_x = myrand(1, gameWindow_Height - 2);
 	coin_y = myrand(1, gameWindow_Width - 2);
@@ -246,25 +246,25 @@ void Game::setcoin()
 				}
 			}
 		}
-		//Ê¤Àû
+		//èƒœåˆ©
 		//system("cls");
-		printf("¹§Ï²ÄãÈ¡µÃÊ¤Àû£¡\n");
+		printf("æ­å–œä½ å–å¾—èƒœåˆ©ï¼\n");
 		exit(1);
 	}
 }
-//Ëæ»úÏİÚå
+//éšæœºé™·é˜±
 void Game::hurt()
 {
-	static int hurttimes = 0;//·ÀÖ¹ÖØ¸´µôÈëÏİÚå
+	static int hurttimes = 0;//é˜²æ­¢é‡å¤æ‰å…¥é™·é˜±
 	if (myrand(1, 100) <= 15)
 	{
 		if (hurttimes == 0)
 		{
 			int tmp = myrand(5, 20);
 			goal -= tmp;
-			//printf("µôÈëÏİÚåÁË£¬¿ÛÁË%d$£¡\n", tmp - 5);
+			//printf("æ‰å…¥é™·é˜±äº†ï¼Œæ‰£äº†%d$ï¼\n", tmp - 5);
 			char text_tmp[100];
-			sprintf_s(text_tmp, "µôÈëÏİÚåÁË£¬¿ÛÁË%d$£¡", tmp - 5);
+			sprintf_s(text_tmp, "æ‰å…¥é™·é˜±äº†ï¼Œæ‰£äº†%d$ï¼", tmp - 5);
 			MessageBox(gamewindow, text_tmp,"warm:",MB_OK);
 			//outtextxy(300, 500, text_tmp);
 			hurttimes++;
@@ -282,16 +282,16 @@ void Game::hurt()
 
 void Screen::showmap()
 {
-	//ÇåÆÁ
+	//æ¸…å±
 	//system("cls");
-	//´òÓ¡Ãæ°å
+	//æ‰“å°é¢æ¿
 	char tmp[100];
-	sprintf_s(tmp, "·ÖÊı£º%d ÌåÁ¦£º%d ´óÁ¦Öµ£º%d",GameControl.getGoal(), GameControl.getPower(),GameControl.getEnergy());
-	outtextxy(0, 0, "                                                              ");//Çå¿ÕÔ­À´µÄ×Ö
+	sprintf_s(tmp, "åˆ†æ•°ï¼š%d ä½“åŠ›ï¼š%d å¤§åŠ›å€¼ï¼š%d",GameControl.getGoal(), GameControl.getPower(),GameControl.getEnergy());
+	outtextxy(0, 0, "                                                              ");//æ¸…ç©ºåŸæ¥çš„å­—
 	outtextxy(0, 0,tmp);
-	outtextxy(0, 20, "                                                              ");//Çå¿ÕÔ­À´µÄ×Ö
-	outtextxy(0, 20, "°´wasdÒÆ¶¯£¬h´ò¿ª°ïÖúÎÄµµ, b´ò¿ªÉÌµê");
-	//´òÓ¡µØÍ¼
+	outtextxy(0, 20, "                                                              ");//æ¸…ç©ºåŸæ¥çš„å­—
+	outtextxy(0, 20, "æŒ‰wasdç§»åŠ¨ï¼Œhæ‰“å¼€å¸®åŠ©æ–‡æ¡£, bæ‰“å¼€å•†åº—");
+	//æ‰“å°åœ°å›¾
 	for (int a = 0; a < gameWindow_Height; a++)
 	{
 		for (int b = 0; b < gameWindow_Width; b++)
@@ -323,17 +323,17 @@ void Screen::showmap()
 		}
 	}
 	
-	//´òÓ¡ÉÌµê
+	//æ‰“å°å•†åº—
 	if (GameControl.getHelpif() != 1)
 	{
 		if (GameControl.getShop() == 1)
 		{
 			outtextxy(0, 50, "                                                                                   ");
-			outtextxy(0, 50, "ÉÌµê£º1.²ù×Ó8$  2.´«ËÍÃÅ10$  3.ÌåÁ¦Ò©Ë®3$  4.Ææ¼£Ò©Ë®15$    ¿Õ¸ñ´«ËÍ");
+			outtextxy(0, 50, "å•†åº—ï¼š1.é“²å­8$  2.ä¼ é€é—¨10$  3.ä½“åŠ›è¯æ°´3$  4.å¥‡è¿¹è¯æ°´15$    ç©ºæ ¼ä¼ é€");
 		}
 		else
 		{
-			//Çå¿ÕÉÌµêÏÔÊ¾
+			//æ¸…ç©ºå•†åº—æ˜¾ç¤º
 			outtextxy(0, 50, "                                                                                                                                                         ");
 		}
 	}
@@ -342,7 +342,7 @@ void Game::move(int key)
 {
 	flushmessage();
 	int me_x, me_y;
-	//Ñ°ÕÒÎÒµÄÎ»ÖÃ
+	//å¯»æ‰¾æˆ‘çš„ä½ç½®
 	bool found = false;
 	for (int a = 0; a < gameWindow_Height; a++)
 	{
@@ -375,7 +375,7 @@ void Game::move(int key)
 				map[me_x][me_y] = SPACE;
 				power--;
 			}
-			//ÍÆ·½¿é
+			//æ¨æ–¹å—
 			if (energy > 0 && map[me_x - 1][me_y] == WALL && me_x - 2 >= 0 && map[me_x - 2][me_y] != COIN)
 			{
 				map[me_x - 2][me_y] = WALL;
@@ -418,7 +418,7 @@ void Game::move(int key)
 				map[me_x][me_y] = SPACE;
 				power--;
 			}
-			//ÍÆ·½¿é
+			//æ¨æ–¹å—
 			if (energy > 0 && map[me_x + 1][me_y] == WALL && me_x < gameWindow_Height - 2 && map[me_x + 2][me_y] != COIN)
 			{
 				map[me_x + 2][me_y] = WALL;
@@ -461,7 +461,7 @@ void Game::move(int key)
 				map[me_x][me_y] = SPACE;
 				power--;
 			}
-			//ÍÆ·½¿é
+			//æ¨æ–¹å—
 			if (energy > 0 && map[me_x][me_y - 1] == WALL && me_y > 1 && map[me_x][me_y - 2] != COIN)
 			{
 				map[me_x][me_y - 2] = WALL;
@@ -504,7 +504,7 @@ void Game::move(int key)
 				map[me_x][me_y] = SPACE;
 				power--;
 			}
-			//ÍÆ·½¿é
+			//æ¨æ–¹å—
 			if (energy > 0 && map[me_x][me_y + 1] == WALL && me_y < gameWindow_Width - 2 && map[me_x][me_y + 2] != COIN)
 			{
 				map[me_x][me_y + 2] = WALL;
@@ -538,7 +538,7 @@ void Game::move(int key)
 			}
 		}
 		break;
-	//´ò¿ª¹Ø±ÕÉÌµê
+	//æ‰“å¼€å…³é—­å•†åº—
 	case 'b':
 		if (shop == 0)
 		{
@@ -560,7 +560,7 @@ void Game::move(int key)
 		}
 		screenControl->show_help();
 		break;
-	//²ù×Ó
+	//é“²å­
 	case '1':
 		if (shop == 0)
 		{
@@ -587,7 +587,7 @@ void Game::move(int key)
 			goal -= 8;
 		}
 		break;
-	//´óÁ¦Ò©Ë®
+	//å¤§åŠ›è¯æ°´
 	case '4':
 		if (shop == 0)
 		{
@@ -599,7 +599,7 @@ void Game::move(int key)
 			energy += 5;
 		}
 		break;
-	//´«ËÍÃÅ
+	//ä¼ é€é—¨
 	case '2':
 		if (shop == 0)
 		{
@@ -610,7 +610,7 @@ void Game::move(int key)
 			destif = 0;
 		}
 		break;
-	//ÌåÁ¦Ò©Ë®
+	//ä½“åŠ›è¯æ°´
 	case '3':
 		if (shop == 0)
 		{
@@ -640,7 +640,7 @@ void Game::move(int key)
 	}
 }
 
-void IOcontrol::boarddown()//¼üÅÌÊÂ¼ş
+void IOcontrol::boarddown()//é”®ç›˜äº‹ä»¶
 {
 	while (peekmessage(&msg))
 	{
@@ -704,26 +704,26 @@ void Game::start()
 {
 	screenControl->loadimg();
 	gamewindow = initgraph(800, 900);
-	mciSendString("open ./music/start.mp3 alias bkmusic", NULL, 0, NULL);//²¥·Å±³¾°ÒôÀÖ
-	mciSendString("play bkmusic repeat", NULL, 0, NULL);//Ñ­»·²¥·Å
-	inmap();//³õÊ¼»¯µØÍ¼
-	BeginBatchDraw();//¿ªÊ¼Ë«»º³å£¬¼õÉÙ»­Ãæ¿¨¶Ù
-	while (1)//ÓÎÏ·Ñ­»·
+	mciSendString("open ./music/start.mp3 alias bkmusic", NULL, 0, NULL);//æ’­æ”¾èƒŒæ™¯éŸ³ä¹
+	mciSendString("play bkmusic repeat", NULL, 0, NULL);//å¾ªç¯æ’­æ”¾
+	inmap();//åˆå§‹åŒ–åœ°å›¾
+	BeginBatchDraw();//å¼€å§‹åŒç¼“å†²ï¼Œå‡å°‘ç”»é¢å¡é¡¿
+	while (1)//æ¸¸æˆå¾ªç¯
 	{
 		endtime = clock();
 		myIOcontroller->boarddown();
-		while(endtime - starttime >= 1000/60)//60Ö¡Ë¢ĞÂ
+		while(endtime - starttime >= 1000/60)//60å¸§åˆ·æ–°
 		{
 			screenControl->showmap();
-			FlushBatchDraw();//Çå³ıË«»º³å»º´æ
+			FlushBatchDraw();//æ¸…é™¤åŒç¼“å†²ç¼“å­˜
 			starttime = clock();
 		}
 	}
-	EndBatchDraw();//½áÊøË«»º³å
+	EndBatchDraw();//ç»“æŸåŒç¼“å†²
 }
 
 int main()
 {
-	GameControl.start();//Æô¶¯ÓÎÏ·
+	GameControl.start();//å¯åŠ¨æ¸¸æˆ
 	return 0;
 }
